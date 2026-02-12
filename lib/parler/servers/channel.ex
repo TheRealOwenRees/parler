@@ -7,8 +7,10 @@ defmodule Parler.Servers.Channel do
   schema "channels" do
     field :name, :string
     field :description, :string
-    field :server_id, :binary_id
-    field :user_id, :binary_id
+
+    belongs_to :server, Parler.Servers.Server, foreign_key: :server_id
+    belongs_to :user, Parler.Accounts.User, foreign_key: :user_id
+    has_many :messages, Parler.Messages.Message
 
     timestamps(type: :utc_datetime)
   end

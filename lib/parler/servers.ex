@@ -41,7 +41,7 @@ defmodule Parler.Servers do
 
   """
   def list_servers(%Scope{} = scope) do
-    Repo.all_by(Server, user_id: scope.user.id)
+    Repo.all_by(Server, owner_id: scope.user.id)
   end
 
   @doc """
@@ -59,7 +59,7 @@ defmodule Parler.Servers do
 
   """
   def get_server!(%Scope{} = scope, id) do
-    Repo.get_by!(Server, id: id, user_id: scope.user.id)
+    Repo.get_by!(Server, id: id, owner_id: scope.user.id)
   end
 
   @doc """
@@ -97,7 +97,7 @@ defmodule Parler.Servers do
 
   """
   def update_server(%Scope{} = scope, %Server{} = server, attrs) do
-    true = server.user_id == scope.user.id
+    true = server.owner_id == scope.user.id
 
     with {:ok, server = %Server{}} <-
            server
@@ -121,7 +121,7 @@ defmodule Parler.Servers do
 
   """
   def delete_server(%Scope{} = scope, %Server{} = server) do
-    true = server.user_id == scope.user.id
+    true = server.owner_id == scope.user.id
 
     with {:ok, server = %Server{}} <-
            Repo.delete(server) do
@@ -140,7 +140,7 @@ defmodule Parler.Servers do
 
   """
   def change_server(%Scope{} = scope, %Server{} = server, attrs \\ %{}) do
-    true = server.user_id == scope.user.id
+    true = server.owner_id == scope.user.id
 
     Server.changeset(server, attrs, scope)
   end

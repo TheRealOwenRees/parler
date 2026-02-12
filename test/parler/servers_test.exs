@@ -36,7 +36,7 @@ defmodule Parler.ServersTest do
       assert server.name == "some name"
       assert server.description == "some description"
       assert server.slug == "some slug"
-      assert server.user_id == scope.user.id
+      assert server.owner_id == scope.user.id
     end
 
     test "create_server/2 with invalid data returns error changeset" do
@@ -47,7 +47,12 @@ defmodule Parler.ServersTest do
     test "update_server/3 with valid data updates the server" do
       scope = user_scope_fixture()
       server = server_fixture(scope)
-      update_attrs = %{name: "some updated name", description: "some updated description", slug: "some updated slug"}
+
+      update_attrs = %{
+        name: "some updated name",
+        description: "some updated description",
+        slug: "some updated slug"
+      }
 
       assert {:ok, %Server{} = server} = Servers.update_server(scope, server, update_attrs)
       assert server.name == "some updated name"

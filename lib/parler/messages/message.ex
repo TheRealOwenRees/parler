@@ -6,9 +6,9 @@ defmodule Parler.Messages.Message do
   @foreign_key_type :binary_id
   schema "messages" do
     field :body, :string
-    field :user, :binary_id
-    field :channel, :binary_id
-    field :user_id, :binary_id
+
+    belongs_to :channel, Parler.Servers.Channel, foreign_key: :channel_id
+    belongs_to :user, Parler.Accounts.User, foreign_key: :user_id
 
     timestamps(type: :utc_datetime)
   end
